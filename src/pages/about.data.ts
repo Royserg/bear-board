@@ -9,12 +9,18 @@ function random(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function fetchName(): Promise<string> {
-  return wait(random(500, 1000), 'Solid');
+// Simulate api request
+function fetchAboutData(): Promise<string> {
+  const data: string = `
+    Mini pet-project dedicated to grasping fundamentals of the new technologies: 
+    tauri (desktop app toolkit), Rust (backend), SolidJS (Frontend);
+  `;
+
+  return wait(random(500, 1000), data);
 }
 
 export const AboutData: RouteDataFunc = () => {
-  const [data] = createResource(fetchName);
+  const [data] = createResource(fetchAboutData);
 
   return data;
 };

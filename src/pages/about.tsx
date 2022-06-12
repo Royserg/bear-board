@@ -1,26 +1,22 @@
 import { Component, createEffect, Suspense } from 'solid-js';
 import { useRouteData } from 'solid-app-router';
+import { FullPageWrapper } from '../layouts/fullpage';
 
 const About: Component = () => {
-  const name = useRouteData<() => string>();
-
-  createEffect(() => {
-    console.log('Name is:', name());
-  });
+  const aboutData = useRouteData<() => string>();
 
   return (
-    <section class='bg-pink-100 text-gray-700 p-8'>
-      <h1 class='text-2xl font-bold'>About</h1>
+    <FullPageWrapper classNames='bg-pink-100 text-gray-700 p-8'>
+      <h1 class='text-2xl font-bold text-center mb-5'>About the project</h1>
 
-      <p class='mt-4'>A page all about this website.</p>
-
-      <p>
-        <span>We love</span>
-        <Suspense fallback={<span>...</span>}>
-          <span>&nbsp;{name()}</span>
-        </Suspense>
-      </p>
-    </section>
+      <Suspense fallback={<span>Loading...</span>}>
+        <div class='container mx-auto w-full px-5'>
+          <p class='text-lg break-normal h-20 whitespace-normal'>
+            {aboutData()}
+          </p>
+        </div>
+      </Suspense>
+    </FullPageWrapper>
   );
 };
 
