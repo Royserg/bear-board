@@ -3,6 +3,8 @@
     windows_subsystem = "windows"
 )]
 
+mod cg_api;
+use cg_api::CoinData;
 use tauri::{CustomMenuItem, Menu, Submenu};
 
 fn main() {
@@ -22,13 +24,16 @@ fn main() {
             }
             _ => {}
         })
-        .invoke_handler(tauri::generate_handler![hello])
+        .invoke_handler(tauri::generate_handler![get_coin_data])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
-// Commands
+// === Commands ===
 #[tauri::command]
-fn hello() -> String {
-    "Hello, world!".into()
+async fn get_coin_data(coin_id: &str) -> Result<CoinData, String> {
+    match cg_api::fetch_coin_data(coin_id).await {
+        Ok(data) => Ok(data),
+        Err(_err) => Err("Invalid coin data provided.".to_string()),
+    }
 }
