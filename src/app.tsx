@@ -7,7 +7,7 @@ const App: Component = () => {
   const Route = useRoutes(routes);
 
   return (
-    <div class='w-screen h-screen truncate'>
+    <div class='w-screen h-screen overflow-x-auto overflow-y-auto'>
       <Navbar />
 
       <main class='w-full h-full'>
