@@ -1,23 +1,24 @@
+import { For } from 'solid-js';
+import { CoinPriceCard } from '../components/coin-price-card/coinPriceCard';
 import { FullPageWrapper } from '../layouts/fullpage';
-import { createResource, Show } from 'solid-js';
-import { invoke } from '@tauri-apps/api/tauri';
 
-const getHello = () => invoke<string>('hello');
+// Imitate store holding saved coins to display
+const coinIds: string[] = [
+  'bitcoin',
+  'ethereum',
+  'near',
+  'solana',
+  'invalid',
+  'neo',
+];
 
 export const Home = () => {
-  const [data] = createResource<string>(getHello);
-
   return (
     <FullPageWrapper classNames='bg-grey-100 text-dark-600 p-8'>
-      <h1 class='text-2xl font-bold'>Home</h1>
+      <h1 class='text-2xl font-bold text-center'>Coins</h1>
 
-      <div class='mt-3 text-sm w-80'>
-        <Show when={!data.loading} fallback={<div>Loading...</div>}>
-          <p>
-            Data from Backend:{' '}
-            <span class='text-dark-800 text-xl font-bold'>{data()}</span>
-          </p>
-        </Show>
+      <div class='container mx-auto mt-3 text-sm w-full grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 place-items-center'>
+        <For each={coinIds}>{(coin) => <CoinPriceCard coinId={coin} />}</For>
       </div>
     </FullPageWrapper>
   );
