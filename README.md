@@ -2,8 +2,21 @@
 
 ## About the project
 
-Simple dashboard showing simple crypto coins stats.
-Project built with Tauri Studio (toolkit for building cross-platform desktop apps) as a mean to learn new technologies, mainly Rust and SolidJS.
+Bear Market - watch your favorite coins` price tank.
+
+Simple dashboard showing crypto coins stats.
+
+Project built with Tauri Studio (toolkit for building cross-platform desktop apps). A side project to learn new technologies, mainly Rust and SolidJS.
+
+---
+
+## Features:
+
+- Open app, display pre-defined tokens general information (price, 24h change, name)
+
+  ![open-app](./docs/bb-open-app.gif)
+
+---
 
 ## Initial architecture showing how particular pieces fit together
 
@@ -33,6 +46,12 @@ run the app
 - `npx tauri dev`
 
 ---
+
+## Icons:
+
+![Outline](./icons/bear-icon.svg)
+![Two-Tone](./icons/bear-icon-two-tone.svg)
+![Two-Tone-Border](./icons/bear-icon-two-tone-border.svg)
 
 ## Memes:
 
