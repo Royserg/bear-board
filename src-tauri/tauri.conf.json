@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "crypto-dashboard",
+    "productName": "BearBoard",
     "version": "0.1.0"
   },
   "tauri": {
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.bearboard.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -55,11 +55,12 @@
     },
     "windows": [
       {
+        "title": "BearBoard",
         "fullscreen": false,
-        "height": 600,
+        "height": 1024,
         "resizable": true,
-        "title": "Cryptoboard",
-        "width": 800
+        "width": 1280,
+        "minWidth": 320
       }
     ]
   }
