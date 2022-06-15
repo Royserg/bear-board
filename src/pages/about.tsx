@@ -6,7 +6,7 @@ const About: Component = () => {
   const aboutData = useRouteData<() => string>();
 
   return (
-    <FullPageWrapper classNames='bg-pink-100 text-gray-700 p-8'>
+    <FullPageWrapper classNames='bg-gray-100 text-gray-700 p-8'>
       <h1 class='text-2xl font-bold text-center mb-5'>About the project</h1>
 
       <Suspense fallback={<span>Loading...</span>}>

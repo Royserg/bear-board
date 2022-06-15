@@ -10,7 +10,7 @@ const App: Component = () => {
     <div class='w-screen h-screen overflow-x-auto overflow-y-auto'>
       <Navbar />
 
-      <main class='w-full h-full'>
+      <main class='w-full h-full pt-5'>
         <Route />
       </main>
     </div>
