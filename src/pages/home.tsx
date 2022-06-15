@@ -8,7 +8,7 @@ const coinIds: string[] = [
   'ethereum',
   'near',
   'solana',
-  'invalid',
+  // 'invalid', invalid token id for testing error message
   'neo',
 ];
 
