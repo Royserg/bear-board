@@ -4,7 +4,7 @@
 )]
 
 mod cg_api;
-use cg_api::CoinData;
+use cg_api::{CoinData, SearchResult};
 use tauri::{CustomMenuItem, Menu, Submenu};
 
 fn main() {
@@ -24,7 +24,7 @@ fn main() {
             }
             _ => {}
         })
-        .invoke_handler(tauri::generate_handler![get_coin_data])
+        .invoke_handler(tauri::generate_handler![get_coin_data, search_coins])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -35,5 +35,16 @@ async fn get_coin_data(coin_id: &str) -> Result<CoinData, String> {
     match cg_api::fetch_coin_data(coin_id).await {
         Ok(data) => Ok(data),
         Err(_err) => Err("Invalid coin data provided.".to_string()),
+    }
+}
+
+#[tauri::command]
+async fn search_coins(search: &str) -> Result<SearchResult, String> {
+    match cg_api::search_coins(search).await {
+        Ok(data) => Ok(data),
+        Err(err) => {
+            println!("Error getting search results. {}", err.to_string());
+            Err("Error getting search results.".to_string())
+        }
     }
 }
