@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api';
-import { CoinData } from '../models/coin-price';
+import { CoinData, SearchResult } from '../models/coin-price';
 
 /**
  * Registered handlers on the backend
@@ -8,6 +8,7 @@ import { CoinData } from '../models/coin-price';
  */
 export enum HANDLERS {
   GET_COIN_DATA = 'get_coin_data',
+  SEARCH_COINS = 'search_coins',
 }
 
 /**
@@ -23,4 +24,12 @@ export enum HANDLERS {
 export const getCoinData = async (data: { coinId: string }) => {
   const { coinId } = data;
   return await invoke<CoinData>(HANDLERS.GET_COIN_DATA, { coinId });
+};
+
+/**
+ * Get coins search result for provided phrase
+ */
+export const searchCoins = async (data: { search: string }) => {
+  const { search } = data;
+  return await invoke<SearchResult>(HANDLERS.SEARCH_COINS, { search });
 };
