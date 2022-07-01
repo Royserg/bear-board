@@ -1,5 +1,5 @@
 import { For } from 'solid-js';
-import { CoinPriceCard } from '../components/coin-price-card/coinPriceCard';
+import { CoinPriceCard } from '../components/coin-price-card/coin-price-card';
 import { Search } from '../components/search/search';
 import { FullPageWrapper } from '../layouts/fullpage';
 

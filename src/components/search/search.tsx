@@ -5,11 +5,14 @@ import {
   createSignal,
   For,
   JSX,
-  ParentComponent,
   Show,
 } from 'solid-js';
 import { SearchCoinResult } from '../../models/coin-price';
 import { searchCoins } from '../../services/backend';
+import {
+  DropdownCoinItem,
+  DropdownLoadingItem,
+} from './components/dropdown-item';
 
 export const Search: Component = () => {
   const [isFetching, setIsFetching] = createSignal(false);
@@ -81,13 +84,7 @@ export const Search: Component = () => {
           <Show when={showDropdown()}>
             <Show when={!isFetching()} fallback={<DropdownLoadingItem />}>
               <For each={setResults()}>
-                {(coinData) => (
-                  <DropdownItem>
-                    <h3 class='card-title'>{coinData.name}</h3>
-                    <h3 class='card-title'>{coinData.symbol}</h3>
-                    <p>you can use any element as a dropdown.</p>
-                  </DropdownItem>
-                )}
+                {(coinData) => <DropdownCoinItem {...coinData} />}
               </For>
             </Show>
           </Show>
@@ -96,17 +93,3 @@ export const Search: Component = () => {
     </div>
   );
 };
-
-const DropdownItem: ParentComponent = ({ children }) => {
-  return (
-    <div class='card card-compact w-full p-2 bg-primary shadow text-primary-content mb-1'>
-      <div class='card-body'>{children}</div>
-    </div>
-  );
-};
-
-const DropdownLoadingItem: Component = () => (
-  <DropdownItem>
-    <p class='text-xl'>Loading...</p>
-  </DropdownItem>
-);
