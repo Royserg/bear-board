@@ -19,7 +19,7 @@
     "@solid-primitives/scheduled": "^1.0.0",
     "@tauri-apps/api": "^1.0.0-rc.6",
     "autoprefixer": "10.0.2",
-    "daisyui": "^2.15.4",
+    "daisyui": "~2.17.0",
     "postcss": "8.4.14",
     "solid-app-router": "^0.3.3",
     "solid-js": "^1.4.2"
