@@ -18,20 +18,27 @@ export const DropdownLoadingItem: Component = () => (
 
 // === Item containing Coin data ===
 interface DropdownCoinItemProps {
+  id: string;
   name: string;
   symbol: string;
   thumb: string;
   market_cap_rank: number;
+  onCoinClick: (id: string) => void;
 }
 
 export const DropdownCoinItem: Component<DropdownCoinItemProps> = ({
+  id,
   name,
   symbol,
   thumb,
   market_cap_rank,
+  onCoinClick,
 }) => (
   <DropdownItem>
-    <div class='flex justify-between items-center text-lg'>
+    <div
+      class='flex justify-between items-center text-lg'
+      onClick={() => onCoinClick(id)}
+    >
       <div class='flex grow justify-start'>
         <img class='rounded-full border shadow-xl bg-light mr-2' src={thumb} />
         <p>

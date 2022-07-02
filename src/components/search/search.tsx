@@ -11,15 +11,24 @@ import { SearchCoinResult } from '../../models/coin-price';
 import { searchCoins } from '../../services/backend';
 import {
   DropdownCoinItem,
+  DropdownItem,
   DropdownLoadingItem,
 } from './components/dropdown-item';
 
-export const Search: Component = () => {
+const MIN_VALID_SEARCH_LENGTH = 2;
+
+interface SearchProps {
+  onCoinClick: (id: string) => void;
+}
+
+export const Search: Component<SearchProps> = ({ onCoinClick }) => {
   const [isFetching, setIsFetching] = createSignal(false);
   const [showDropdown, setShowDropdown] = createSignal(false);
 
   const [searchVal, setSearchVal] = createSignal('');
-  const [setResults, setSearchResults] = createSignal<SearchCoinResult[]>([]);
+  const [searchResults, setSearchResults] = createSignal<SearchCoinResult[]>(
+    []
+  );
 
   // Debounced results fetcher
   const getSearchResults = debounce(async (search: string) => {
@@ -32,7 +41,7 @@ export const Search: Component = () => {
 
   createEffect(() => {
     getSearchResults.clear();
-    if (searchVal().length > 0) {
+    if (searchVal().length >= MIN_VALID_SEARCH_LENGTH) {
       setIsFetching(true);
       setShowDropdown(true);
       getSearchResults(searchVal());
@@ -52,22 +61,6 @@ export const Search: Component = () => {
     <div class='mx-auto w-full max-w-lg h-10 text-center z-50'>
       <div class='dropdown w-full mx-auto'>
         <div class='input-group mb-2'>
-          <button class='btn btn-outline btn-square bg-accent-content'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              class='h-6 w-6'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                stroke-width='2'
-                d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-              />
-            </svg>
-          </button>
           <input
             name='search'
             type='search'
@@ -75,20 +68,34 @@ export const Search: Component = () => {
             class='input w-full'
             autocomplete='false'
             autocapitalize='none'
+            value={searchVal()}
             onInput={onInput}
           />
         </div>
 
         {/* Dropdown */}
-        <div tabindex='0' class='dropdown-content max-w-lg w-full'>
-          <Show when={showDropdown()}>
+        <Show when={showDropdown()}>
+          <div tabindex='0' class='dropdown-content max-w-lg w-full'>
             <Show when={!isFetching()} fallback={<DropdownLoadingItem />}>
-              <For each={setResults()}>
-                {(coinData) => <DropdownCoinItem {...coinData} />}
-              </For>
+              <Show
+                when={searchResults().length > 0}
+                fallback={<DropdownItem>No results</DropdownItem>}
+              >
+                <For each={searchResults()}>
+                  {(coinData) => (
+                    <DropdownCoinItem
+                      {...coinData}
+                      onCoinClick={(id) => {
+                        setSearchVal('');
+                        onCoinClick(id);
+                      }}
+                    />
+                  )}
+                </For>
+              </Show>
             </Show>
-          </Show>
-        </div>
+          </div>
+        </Show>
       </div>
     </div>
   );
