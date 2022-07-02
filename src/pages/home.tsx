@@ -17,6 +17,8 @@ export const Home = () => {
       <div class='container w-full mx-auto mt-3 text-sm grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 place-items-center z-10'>
         <For each={coinIds}>{(coin) => <CoinPriceCard coinId={coin} />}</For>
       </div>
+
+      <CoinGeckoFooter />
     </FullPageWrapper>
   );
 };

@@ -1,6 +1,7 @@
 import { Component, createEffect, Suspense } from 'solid-js';
 import { useRouteData } from 'solid-app-router';
 import { FullPageWrapper } from '../layouts/fullpage';
+import { CoinGeckoFooter } from '../components/footer/coin-gecko-footer';
 
 const About: Component = () => {
   const aboutData = useRouteData<() => string>();
@@ -16,17 +17,6 @@ const About: Component = () => {
           </p>
         </div>
       </Suspense>
-
-      <footer class='fixed bottom-0 left-0 px-2 py-4 w-full text-center'>
-        Powered by{' '}
-        <a
-          href='https://www.coingecko.com/en/api'
-          target='_blank'
-          class='text-teal-700 hover:text-teal-900'
-        >
-          CoinGecko API
-        </a>
-      </footer>
     </FullPageWrapper>
   );
 };
