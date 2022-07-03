@@ -8,6 +8,8 @@ import {
 import { CoinData } from '../../models/coin-price';
 import { getCoinData } from '../../services/backend';
 import { Spinner } from '../spinner/spinner';
+import { BsTrash } from 'solid-icons/bs';
+import { deleteCoin } from '../../store/coins';
 
 interface CoinPriceCardProps {
   coinId: string;
@@ -17,12 +19,21 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
   const fetchCoinData = async () => await getCoinData({ coinId });
   const [data] = createResource<CoinData>(fetchCoinData);
 
+  const handleDeleteCoin = () => {
+    deleteCoin(coinId);
+  };
+
   // Tailwind comp https://tailwindcomponents.com/component/small-bio-paper
   return (
-    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl'>
+    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl relative'>
       <Show when={!data.loading} fallback={<Spinner />}>
         <ErrorBoundary fallback={(error) => <CoinPriceError error={error} />}>
           <div class='h-24 bg-light-600'>
+            {/* Delete button */}
+            <button class='absolute right-2 top-2' onClick={handleDeleteCoin}>
+              <BsTrash class='' size={20} />
+            </button>
+
             <p class='text-center pt-2'>24h change</p>
             <p
               class={
