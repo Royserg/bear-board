@@ -1,4 +1,4 @@
-import 'virtual:windi.css';
+import './index.css';
 
 import { render } from 'solid-js/web';
 import { Router } from 'solid-app-router';
