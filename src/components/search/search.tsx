@@ -7,15 +7,15 @@ import {
   JSX,
   Show,
 } from 'solid-js';
+import { MIN_VALID_SEARCH_LENGTH } from '../../constants';
 import { SearchCoinResult } from '../../models/coin-price';
 import { searchCoins } from '../../services/backend';
+import { getSearchValue, updateSearchValue } from '../../store/search';
 import {
   DropdownCoinItem,
   DropdownItem,
   DropdownLoadingItem,
 } from './components/dropdown-item';
-
-const MIN_VALID_SEARCH_LENGTH = 2;
 
 interface SearchProps {
   onCoinClick: (id: string) => void;
@@ -25,7 +25,6 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
   const [isFetching, setIsFetching] = createSignal(false);
   const [showDropdown, setShowDropdown] = createSignal(false);
 
-  const [searchVal, setSearchVal] = createSignal('');
   const [searchResults, setSearchResults] = createSignal<SearchCoinResult[]>(
     []
   );
@@ -41,10 +40,10 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
 
   createEffect(() => {
     getSearchResults.clear();
-    if (searchVal().length >= MIN_VALID_SEARCH_LENGTH) {
+    if (getSearchValue().length >= MIN_VALID_SEARCH_LENGTH) {
       setIsFetching(true);
       setShowDropdown(true);
-      getSearchResults(searchVal());
+      getSearchResults(getSearchValue());
     } else {
       // Search query cleared
       setSearchResults([]);
@@ -54,7 +53,7 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
 
   const onInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) => {
     const search = event.currentTarget.value;
-    setSearchVal(search);
+    updateSearchValue(search);
   };
 
   return (
@@ -68,7 +67,7 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
             class='input w-full'
             autocomplete='false'
             autocapitalize='none'
-            value={searchVal()}
+            value={getSearchValue()}
             onInput={onInput}
           />
         </div>
@@ -82,15 +81,7 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
                 fallback={<DropdownItem>No results</DropdownItem>}
               >
                 <For each={searchResults()}>
-                  {(coinData) => (
-                    <DropdownCoinItem
-                      {...coinData}
-                      onCoinClick={(id) => {
-                        setSearchVal('');
-                        onCoinClick(id);
-                      }}
-                    />
-                  )}
+                  {(coinData) => <DropdownCoinItem {...coinData} />}
                 </For>
               </Show>
             </Show>

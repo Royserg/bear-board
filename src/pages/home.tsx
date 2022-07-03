@@ -1,20 +1,13 @@
-import { createSignal, For } from 'solid-js';
+import { For, Show } from 'solid-js';
 import { CoinPriceCard } from '../components/coin-price-card/coin-price-card';
 import { CoinGeckoFooter } from '../components/footer/coin-gecko-footer';
 import { Search } from '../components/search/search';
 import { FullPageWrapper } from '../layouts/fullpage';
+import { addCoin, getCoins } from '../store/coins';
 
 export const Home = () => {
-  // Imitate store holding saved coins to display
-  const [coinIds, setCoinIds] = createSignal<string[]>([
-    'bitcoin',
-    'ethereum',
-    'near',
-    'solana',
-  ]);
-
-  const handleCoinClick = (id: string) => {
-    setCoinIds((ids) => [...ids, id]);
+  const handleCoinClick = async (id: string) => {
+    addCoin(id);
   };
 
   return (
@@ -24,9 +17,16 @@ export const Home = () => {
       <Search onCoinClick={handleCoinClick} />
       <div class='mb-10'></div>
 
-      <div class='container w-full mx-auto mt-3 text-sm grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 place-items-center z-10'>
-        <For each={coinIds()}>{(coin) => <CoinPriceCard coinId={coin} />}</For>
-      </div>
+      <Show
+        when={getCoins().length > 0}
+        fallback={<div class='mx-auto text-center'>No coins added</div>}
+      >
+        <div class='container w-full mx-auto mt-3 text-sm grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 place-items-center z-10'>
+          <For each={getCoins()}>
+            {(coin) => <CoinPriceCard coinId={coin} />}
+          </For>
+        </div>
+      </Show>
 
       <CoinGeckoFooter />
     </FullPageWrapper>

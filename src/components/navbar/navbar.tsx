@@ -7,7 +7,6 @@ export const Navbar = () => {
 
   const isActivePath = (path: string) => {
     const result = path === pathname();
-    console.log('path: ', path, result);
     return result;
   };
 

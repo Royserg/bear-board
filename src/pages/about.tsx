@@ -1,7 +1,6 @@
-import { Component, createEffect, Suspense } from 'solid-js';
 import { useRouteData } from 'solid-app-router';
+import { Component, Suspense } from 'solid-js';
 import { FullPageWrapper } from '../layouts/fullpage';
-import { CoinGeckoFooter } from '../components/footer/coin-gecko-footer';
 
 const About: Component = () => {
   const aboutData = useRouteData<() => string>();
