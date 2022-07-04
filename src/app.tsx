@@ -1,21 +1,18 @@
 import { useRoutes } from 'solid-app-router';
 import { Component, onMount } from 'solid-js';
-import { Navbar } from './components/navbar/navbar';
 import { routes } from './routes';
-import { initCoinsStore } from './store/coins';
 
 const App: Component = () => {
   const Route = useRoutes(routes);
 
-  onMount(() => {
-    initCoinsStore();
-  });
-
   return (
     <div class='w-screen h-screen overflow-x-auto overflow-y-auto'>
-      <Navbar />
+      {/* 
+        <Navbar /> 
+        add `pt-5` to <main> if Navbar uncommented
+      */}
 
-      <main class='w-full h-full pt-5'>
+      <main class='w-full h-full'>
         <Route />
       </main>
     </div>

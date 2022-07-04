@@ -1,11 +1,10 @@
 import { Component, ParentComponent } from 'solid-js';
-import { addCoin } from '../../../store/coins';
-import { updateSearchValue } from '../../../store/search';
+import { useSelector } from '../../../store';
 
 // === Card wrapper for Dropdown Items ===
 export const DropdownItem: ParentComponent = ({ children }) => {
   return (
-    <div class='card card-compact w-full p-2 bg-secondary shadow text-primary-content mb-1 hover:bg-primary cursor-pointer'>
+    <div class='card card-compact w-full p-2 bg-base-200 hover:bg-base-300 shadow text-primary-content mb-1 cursor-pointer'>
       <div class='card-body'>{children}</div>
     </div>
   );
@@ -14,7 +13,7 @@ export const DropdownItem: ParentComponent = ({ children }) => {
 // === Loading Item ===
 export const DropdownLoadingItem: Component = () => (
   <DropdownItem>
-    <p class='text-xl'>Loading...</p>
+    <p class='text-primary-content'>Loading...</p>
   </DropdownItem>
 );
 
@@ -34,9 +33,14 @@ export const DropdownCoinItem: Component<DropdownCoinItemProps> = ({
   thumb,
   market_cap_rank,
 }) => {
+  const {
+    coins: { addCoinId },
+    search: { setSearchValue },
+  } = useSelector();
+
   const handleCoinClick = () => {
-    updateSearchValue('');
-    addCoin(id);
+    setSearchValue('');
+    addCoinId(id);
   };
 
   return (

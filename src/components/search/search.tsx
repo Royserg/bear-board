@@ -1,4 +1,5 @@
 import { debounce } from '@solid-primitives/scheduled';
+import { BiSearchAlt } from 'solid-icons/bi';
 import {
   Component,
   createEffect,
@@ -8,58 +9,59 @@ import {
   Show,
 } from 'solid-js';
 import { MIN_VALID_SEARCH_LENGTH } from '../../constants';
-import { SearchCoinResult } from '../../models/coin-price';
-import { searchCoins } from '../../services/backend';
-import { getSearchValue, updateSearchValue } from '../../store/search';
+import { useSelector } from '../../store';
 import {
   DropdownCoinItem,
   DropdownItem,
   DropdownLoadingItem,
 } from './components/dropdown-item';
 
-interface SearchProps {
-  onCoinClick: (id: string) => void;
-}
+interface SearchProps {}
+export const Search: Component<SearchProps> = () => {
+  const {
+    search: {
+      searchValue,
+      isFetching,
+      clearSearchResults,
+      searchForCoins,
+      setSearchValue,
+      setFetching,
+      searchResults,
+    },
+  } = useSelector();
 
-export const Search: Component<SearchProps> = ({ onCoinClick }) => {
-  const [isFetching, setIsFetching] = createSignal(false);
   const [showDropdown, setShowDropdown] = createSignal(false);
 
-  const [searchResults, setSearchResults] = createSignal<SearchCoinResult[]>(
-    []
-  );
-
   // Debounced results fetcher
-  const getSearchResults = debounce(async (search: string) => {
-    // Await invoked method
-    const result = await searchCoins({ search });
-
-    setSearchResults(result.coins.slice(0, 5));
-    setIsFetching(false);
+  const searchCoins = debounce(async (search: string) => {
+    await searchForCoins(search);
   }, 450);
 
   createEffect(() => {
-    getSearchResults.clear();
-    if (getSearchValue().length >= MIN_VALID_SEARCH_LENGTH) {
-      setIsFetching(true);
+    searchCoins.clear();
+    if (searchValue().length >= MIN_VALID_SEARCH_LENGTH) {
+      setFetching(true);
       setShowDropdown(true);
-      getSearchResults(getSearchValue());
+      searchCoins(searchValue());
     } else {
       // Search query cleared
-      setSearchResults([]);
+      clearSearchResults();
       setShowDropdown(false);
     }
   });
 
   const onInput: JSX.EventHandler<HTMLInputElement, InputEvent> = (event) => {
     const search = event.currentTarget.value;
-    updateSearchValue(search);
+    setSearchValue(search);
   };
 
   return (
     <div class='mx-auto w-full max-w-lg h-10 text-center z-50'>
       <div class='dropdown w-full mx-auto'>
         <div class='input-group mb-2'>
+          <button class='btn btn-square btn-ghost no-animation bg-base-200'>
+            <BiSearchAlt size={24} color='#000000' />
+          </button>
           <input
             name='search'
             type='search'
@@ -67,7 +69,7 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
             class='input w-full'
             autocomplete='false'
             autocapitalize='none'
-            value={getSearchValue()}
+            value={searchValue()}
             onInput={onInput}
           />
         </div>
@@ -80,7 +82,7 @@ export const Search: Component<SearchProps> = ({ onCoinClick }) => {
                 when={searchResults().length > 0}
                 fallback={<DropdownItem>No results</DropdownItem>}
               >
-                <For each={searchResults()}>
+                <For each={searchResults().slice(0, 5)}>
                   {(coinData) => <DropdownCoinItem {...coinData} />}
                 </For>
               </Show>
