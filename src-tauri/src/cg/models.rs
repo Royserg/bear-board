@@ -21,10 +21,10 @@ pub struct CoinData {
     block_time_in_minutes: i16,
     hashing_algorithm: Option<String>,
     image: CoinDataImage,
-    market_cap_rank: i32,
-    coingecko_rank: i32,
+    market_cap_rank: Option<i32>,
+    coingecko_rank: Option<i32>,
     last_updated: String,
-    market_data: MarketData,
+    market_data: Option<MarketData>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
