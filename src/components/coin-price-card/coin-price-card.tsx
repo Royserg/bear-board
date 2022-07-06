@@ -1,37 +1,28 @@
-import { BsTrash } from 'solid-icons/bs';
 import { Component, createResource, ErrorBoundary, Show } from 'solid-js';
 import { CoinData } from '../../models/coin-price';
 import { getCoinData } from '../../services/backend';
-import { useSelector } from '../../store';
 import { Spinner } from '../spinner/spinner';
+import { CoinActionsMenu } from './components/coin-actions-menu';
 
 interface CoinPriceCardProps {
   coinId: string;
 }
 
 export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
-  const {
-    coins: { deleteCoinId },
-  } = useSelector();
-
-  const fetchCoinData = async () => await getCoinData({ coinId });
-  const [data] = createResource<CoinData>(fetchCoinData);
-
-  const handleDeleteCoin = () => {
-    deleteCoinId(coinId);
+  const fetchCoinData = async () => {
+    try {
+      return await getCoinData({ coinId });
+    } catch (error) {
+      console.log(`Error fetching coin data: ${coinId}`, error);
+    }
   };
+  const [data, { refetch }] = createResource<CoinData>(fetchCoinData);
 
   // Tailwind comp https://tailwindcomponents.com/component/small-bio-paper
   return (
-    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-hidden rounded-2xl bg-slate-200 shadow-xl relative'>
+    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-slate-200 shadow-xl relative'>
       <Show when={!data.loading} fallback={<Spinner />}>
-        {/* Delete button */}
-        <button
-          class='absolute right-2 top-2 btn btn-xs btn-circle btn-ghost'
-          onClick={handleDeleteCoin}
-        >
-          <BsTrash class='' size={20} />
-        </button>
+        <CoinActionsMenu coinId={coinId} onReload={() => refetch()} />
 
         <ErrorBoundary fallback={(error) => <CoinPriceError error={error} />}>
           <div class='h-24 bg-light-600'>
