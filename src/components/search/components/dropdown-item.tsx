@@ -4,7 +4,7 @@ import { useSelector } from '../../../store';
 // === Card wrapper for Dropdown Items ===
 export const DropdownItem: ParentComponent = ({ children }) => {
   return (
-    <div class='card card-compact w-full p-2 bg-base-200 hover:bg-base-300 shadow text-primary-content mb-1 cursor-pointer'>
+    <div class='card card-compact w-full p-2 bg-base-100 hover:bg-base-200 shadow text-primary-content mb-1 cursor-pointer'>
       <div class='card-body'>{children}</div>
     </div>
   );
