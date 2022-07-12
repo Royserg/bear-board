@@ -25,19 +25,21 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
         <CoinActionsMenu coinId={coinId} onReload={() => refetch()} />
 
         <ErrorBoundary fallback={(error) => <CoinPriceError error={error} />}>
-          <div class='h-24 bg-light-600'>
-            <p class='text-center pt-2'>24h change</p>
-            <p
-              class={
-                'text-center font-bold text-lg ' +
-                (data().market_data.price_change_percentage_24h > 0
-                  ? 'text-emerald-500'
-                  : 'text-rose-500')
-              }
-            >
-              {data().market_data.price_change_percentage_24h.toFixed(2)}%
-            </p>
-          </div>
+          <Show when={data()?.market_data}>
+            <div class='h-24 bg-light-600'>
+              <p class='text-center pt-2'>24h change</p>
+              <p
+                class={
+                  'text-center font-bold text-lg ' +
+                  (data().market_data.price_change_percentage_24h > 0
+                    ? 'text-emerald-500'
+                    : 'text-rose-500')
+                }
+              >
+                {data().market_data.price_change_percentage_24h.toFixed(2)}%
+              </p>
+            </div>
+          </Show>
           <div class='-mt-8 flex justify-center'>
             <img
               class='h-24 rounded-full border shadow-xl bg-light-400'
@@ -49,7 +51,9 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
           </div>
           <blockquote>
             <p class='mx-2 mb-7 text-center text-base'>
-              ${data().market_data.current_price.usd.toFixed(2)}
+              <Show when={data().market_data} fallback={'Unknown price'}>
+                ${data()?.market_data.current_price.usd.toFixed(2)}
+              </Show>
             </p>
           </blockquote>
         </ErrorBoundary>

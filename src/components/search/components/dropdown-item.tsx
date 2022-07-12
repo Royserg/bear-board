@@ -2,9 +2,20 @@ import { Component, ParentComponent } from 'solid-js';
 import { useSelector } from '../../../store';
 
 // === Card wrapper for Dropdown Items ===
-export const DropdownItem: ParentComponent = ({ children }) => {
+interface DropdownItemProps {
+  classNames?: string;
+  onClick?: (event: MouseEvent) => void;
+}
+export const DropdownItem: ParentComponent<DropdownItemProps> = ({
+  children,
+  onClick,
+  classNames,
+}) => {
   return (
-    <div class='card card-compact w-full p-2 bg-base-100 hover:bg-base-200 shadow text-primary-content mb-1 cursor-pointer'>
+    <div
+      class={`card card-compact w-full bg-base-100 hover:bg-base-200 shadow text-primary-content mb-1 cursor-pointer ${classNames}`}
+      onClick={onClick}
+    >
       <div class='card-body'>{children}</div>
     </div>
   );
@@ -44,14 +55,11 @@ export const DropdownCoinItem: Component<DropdownCoinItemProps> = ({
   };
 
   return (
-    <DropdownItem>
-      <div
-        class='flex justify-between items-center text-lg'
-        onClick={handleCoinClick}
-      >
+    <DropdownItem onClick={handleCoinClick}>
+      <div class='flex justify-between items-center text-lg'>
         <div class='flex grow justify-start'>
           <img
-            class='rounded-full border shadow-xl bg-light mr-2'
+            class='rounded-full border shadow-xl bg-light mr-2 h-8'
             src={thumb}
           />
           <p>
