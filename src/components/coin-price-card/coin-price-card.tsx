@@ -20,7 +20,7 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
 
   // Tailwind comp https://tailwindcomponents.com/component/small-bio-paper
   return (
-    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-slate-200 shadow-xl relative'>
+    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-slate-200 shadow-xl relative transition-all duration-300'>
       <Show when={!data.loading} fallback={<Spinner />}>
         <CoinActionsMenu coinId={coinId} onReload={() => refetch()} />
 

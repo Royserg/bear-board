@@ -11,6 +11,7 @@ specifiers:
   solid-app-router: ^0.3.3
   solid-icons: ^0.4.13
   solid-js: ^1.4.2
+  solid-transition-group: ^0.0.10
   tailwindcss: ^3.1.4
   vite: ^2.9.9
   vite-plugin-solid: ^2.2.6
@@ -22,6 +23,7 @@ dependencies:
   solid-app-router: 0.3.3_solid-js@1.4.2
   solid-icons: 0.4.13_solid-js@1.4.2
   solid-js: 1.4.2
+  solid-transition-group: 0.0.10_solid-js@1.4.2
 
 devDependencies:
   '@tauri-apps/cli': 1.0.0-rc.13
@@ -1356,6 +1358,14 @@ packages:
       '@babel/types': 7.17.0
       solid-js: 1.4.2
     dev: true
+
+  /solid-transition-group/0.0.10_solid-js@1.4.2:
+    resolution: {integrity: sha512-b3O9z6BUP60CG1WnTdqFuvHms0reDNYwQF+eAEEaSaoDEmiOu9+Lu7zQgWGySJjaAdSAClhmFCmx/eAjQgfIoA==}
+    peerDependencies:
+      solid-js: ^1.0.0
+    dependencies:
+      solid-js: 1.4.2
+    dev: false
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

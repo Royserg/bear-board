@@ -24,6 +24,7 @@
     "localforage": "^1.10.0",
     "solid-app-router": "^0.3.3",
     "solid-icons": "^0.4.13",
-    "solid-js": "^1.4.2"
+    "solid-js": "^1.4.2",
+    "solid-transition-group": "^0.0.10"
   }
 }
