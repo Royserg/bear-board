@@ -7,7 +7,12 @@ export const FullPageWrapper: ParentComponent<FullPageWrapperProps> = ({
   classNames,
 }) => {
   return (
-    <section class={'h-full w-full overflow-y-auto ' + classNames}>
+    <section
+      class={
+        'h-full w-full overflow-y-auto flex flex-col justify-start ' +
+        classNames
+      }
+    >
       {children}
     </section>
   );

@@ -2,7 +2,7 @@ import { Component } from 'solid-js';
 
 export const CoinGeckoFooter: Component = () => {
   return (
-    <footer class='fixed bottom-0 left-0 px-2 py-4 w-full text-center'>
+    <footer class='mt-auto px-2 pt-4 w-full text-center'>
       Powered by{' '}
       <a
         href='https://www.coingecko.com/en/api'
