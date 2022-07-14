@@ -7,6 +7,7 @@ import {
   createSignal,
   For,
   JSX,
+  onMount,
   Show,
 } from 'solid-js';
 import { MIN_VALID_SEARCH_LENGTH } from '../../constants';
@@ -80,6 +81,12 @@ export const Search: Component<SearchProps> = () => {
     }
   };
 
+  let searchInputRef: HTMLInputElement;
+  onMount(() => {
+    // Focus search input when component loads
+    searchInputRef.focus();
+  });
+
   return (
     <div class='mx-auto w-full max-w-lg h-10 text-center z-50'>
       <div class='dropdown w-full mx-auto'>
@@ -88,6 +95,8 @@ export const Search: Component<SearchProps> = () => {
             <BiSearchAlt size={24} color='#000000' />
           </button>
           <input
+            // id='search-input'
+            ref={searchInputRef}
             name='search'
             type='search'
             placeholder='Search coins...'

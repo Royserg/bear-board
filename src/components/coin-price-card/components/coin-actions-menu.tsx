@@ -35,9 +35,9 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
 
   return (
     <div class='dropdown absolute right-2 top-2'>
-      <div tabindex='0' class='btn btn-xs btn-circle btn-ghost'>
+      <label tabindex='0' class='btn btn-xs btn-circle btn-ghost'>
         <BiMenuAltRight size={MENU_ICON_SIZE} />
-      </div>
+      </label>
 
       {/* Dropdown content */}
       <ul

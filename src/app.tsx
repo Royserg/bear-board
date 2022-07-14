@@ -1,5 +1,5 @@
 import { useRoutes } from 'solid-app-router';
-import { Component, onMount } from 'solid-js';
+import { Component } from 'solid-js';
 import { routes } from './routes';
 
 const App: Component = () => {
