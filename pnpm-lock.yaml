@@ -5,7 +5,7 @@ specifiers:
   '@tauri-apps/api': ^1.0.0-rc.6
   '@tauri-apps/cli': ^1.0.0-rc.13
   autoprefixer: 10.0.2
-  daisyui: ~2.17.0
+  daisyui: 2.19.0
   localforage: ^1.10.0
   postcss: 8.4.14
   solid-app-router: ^0.3.3
@@ -28,7 +28,7 @@ dependencies:
 devDependencies:
   '@tauri-apps/cli': 1.0.0-rc.13
   autoprefixer: 10.0.2_postcss@8.4.14
-  daisyui: 2.17.0_wztxpj6jpdi3mqy6u76cehzodq
+  daisyui: 2.19.0_wztxpj6jpdi3mqy6u76cehzodq
   postcss: 8.4.14
   tailwindcss: 3.1.4
   vite: 2.9.9
@@ -690,8 +690,8 @@ packages:
     hasBin: true
     dev: true
 
-  /daisyui/2.17.0_wztxpj6jpdi3mqy6u76cehzodq:
-    resolution: {integrity: sha512-U8eA8IvwH0JSi72WbRZdmJcYZek3ERMPFPAVFhnYc6dGnobeIHLGBz8J4q012I9YVDUqXFrWz13rpn+SBdn7qQ==}
+  /daisyui/2.19.0_wztxpj6jpdi3mqy6u76cehzodq:
+    resolution: {integrity: sha512-lLOz4cHm3xpm0AfdFojDFrhiDu4hZTdEbcVJri+KzQn1HvxmZS4STVujn8tV4RQXjchGdnIsXFqxd6F7rVZBiA==}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.1.6
