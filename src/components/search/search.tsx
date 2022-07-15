@@ -90,7 +90,7 @@ export const Search: Component<SearchProps> = () => {
   return (
     <div class='mx-auto w-full max-w-lg h-10 text-center z-50'>
       <div class='dropdown w-full mx-auto'>
-        <div class='input-group mb-2 shadow-xl'>
+        <div class='input-group mb-2 shadow-xl rounded-l-lg'>
           <button class='btn btn-square btn-ghost no-animation bg-base-200'>
             <BiSearchAlt size={24} color='#000000' />
           </button>
