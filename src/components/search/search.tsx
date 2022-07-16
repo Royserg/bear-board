@@ -95,7 +95,6 @@ export const Search: Component<SearchProps> = () => {
             <BiSearchAlt size={24} color='#000000' />
           </button>
           <input
-            // id='search-input'
             ref={searchInputRef}
             name='search'
             type='search'
