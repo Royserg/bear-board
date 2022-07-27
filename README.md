@@ -12,9 +12,11 @@ Project built with Tauri Studio (toolkit for building cross-platform desktop app
 
 ## Features:
 
-- Open app, display pre-defined tokens general information (price, 24h change, name)
+- coin search
+- delete, reload coin data
+- offline storage (persist selected coin on app close)
 
-  ![open-app](./docs/bb-open-app.gif)
+![Search coin](./docs/search-coin.gif)
 
 ---
 
@@ -27,7 +29,7 @@ Project built with Tauri Studio (toolkit for building cross-platform desktop app
 - Tauri [website](https://tauri.studio/)
 - Rust [website](https://www.rust-lang.org/)
 - SolidJS [website](https://www.solidjs.com/)
-- WindiCSS (TailwindCss) [website](https://windicss.org/)
+- TailwindCss [website](https://tailwindcss.com/)
 
 ## API:
 

@@ -33,3 +33,16 @@ export interface CoinData {
     price_change_percentage_30d: number;
   };
 }
+
+export interface SearchResult {
+  coins: SearchCoinResult[];
+}
+
+export interface SearchCoinResult {
+  id: string;
+  name: string;
+  symbol: string;
+  market_cap_rank: number;
+  thumb: string;
+  large: string;
+}

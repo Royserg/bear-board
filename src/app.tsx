@@ -1,6 +1,5 @@
 import { useRoutes } from 'solid-app-router';
-import type { Component } from 'solid-js';
-import { Navbar } from './components/navbar/navbar';
+import { Component } from 'solid-js';
 import { routes } from './routes';
 
 const App: Component = () => {
@@ -8,9 +7,12 @@ const App: Component = () => {
 
   return (
     <div class='w-screen h-screen overflow-x-auto overflow-y-auto'>
-      <Navbar />
+      {/* 
+        <Navbar /> 
+        add `pt-5` to <main> if Navbar uncommented
+      */}
 
-      <main class='w-full h-full pt-5'>
+      <main class='w-full h-full'>
         <Route />
       </main>
     </div>

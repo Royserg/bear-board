@@ -1,14 +1,17 @@
-import 'virtual:windi.css';
+import './index.css';
 
 import { render } from 'solid-js/web';
 import { Router } from 'solid-app-router';
 import App from './app';
+import { StoreProvider } from './store';
 
 render(
   () => (
-    <Router>
-      <App />
-    </Router>
+    <StoreProvider>
+      <Router>
+        <App />
+      </Router>
+    </StoreProvider>
   ),
   document.getElementById('root') as HTMLElement
 );
