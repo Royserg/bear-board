@@ -9,7 +9,7 @@ export const FullPageWrapper: ParentComponent<FullPageWrapperProps> = ({
   return (
     <section
       class={
-        'h-full w-full overflow-y-auto flex flex-col justify-start ' +
+        'h-full w-full overflow-y-auto overflow-x-hidden flex flex-col justify-start ' +
         classNames
       }
     >
