@@ -13,7 +13,7 @@ export const Home = () => {
 
   return (
     <FullPageWrapper classNames='bg-gray-100 text-dark-600 px-8 py-2'>
-      <h1 class='text-2xl font-bold text-center mb-3'>Coins</h1>
+      <div class='mt-5'></div>
 
       <Search />
       <div class='mb-10'></div>
