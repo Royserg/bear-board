@@ -1,18 +1,17 @@
 import { Component, createEffect, createSignal, onMount } from 'solid-js';
-
-enum Theme {
-  LIGHT = 'bumblebee',
-  DARK = 'halloween',
-}
+import { useSelector } from '../../store';
+import { Theme } from '../../store/theme';
 
 export const ThemeWidget: Component = () => {
   let htmlRef: HTMLElement | null = null;
 
+  const {
+    theme: { theme, setTheme },
+  } = useSelector();
+
   onMount(() => {
     htmlRef = document.querySelector('html');
   });
-
-  const [theme, setTheme] = createSignal<Theme>(Theme.LIGHT);
 
   createEffect(() => {
     if (htmlRef) {
