@@ -18,15 +18,15 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
   };
   const [data, { refetch }] = createResource<CoinData>(fetchCoinData);
 
-  // Tailwind comp https://tailwindcomponents.com/component/small-bio-paper
   return (
-    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-slate-200 shadow-xl relative transition-all duration-300'>
+    <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-base-100 shadow-xl relative transition-all duration-300'>
       <Show when={!data.loading} fallback={<Spinner />}>
         <CoinActionsMenu coinId={coinId} onReload={() => refetch()} />
 
         <ErrorBoundary fallback={(error) => <CoinPriceError error={error} />}>
+          {/* 24hour change */}
           <Show when={data()?.market_data}>
-            <div class='h-24 bg-light-600'>
+            <div class='h-24 bg-light-600 text-base-content'>
               <p class='text-center pt-2'>24h change</p>
               <p
                 class={
@@ -40,17 +40,23 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
               </p>
             </div>
           </Show>
+
+          {/* Coin img */}
           <div class='-mt-8 flex justify-center'>
             <img
-              class='h-24 rounded-full border shadow-xl bg-light-400'
+              class='h-24 rounded-full border shadow-xl bg-white'
               src={data().image.large}
             />
           </div>
-          <div class='mt-5 mb-1 px-3 text-center text-xl font-semibold'>
+
+          {/* Coin name */}
+          <div class='mt-5 mb-1 px-3 text-center text-xl font-semibold text-base-content'>
             {data().name}
           </div>
+
+          {/* Price */}
           <blockquote>
-            <p class='mx-2 mb-7 text-center text-base'>
+            <p class='mx-2 mb-7 text-center text-base-content'>
               <Show when={data().market_data} fallback={'Unknown price'}>
                 ${data()?.market_data.current_price.usd.toFixed(2)}
               </Show>

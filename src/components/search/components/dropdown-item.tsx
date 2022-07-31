@@ -13,7 +13,7 @@ export const DropdownItem: ParentComponent<DropdownItemProps> = ({
 }) => {
   return (
     <div
-      class={`card card-compact w-full bg-base-100 hover:bg-base-200 shadow text-primary-content mb-1 cursor-pointer ${classNames}`}
+      class={`card card-compact w-full bg-base-100 hover:bg-base-200 border-2 shadow text-primary-content cursor-pointer ${classNames}`}
       onClick={onClick}
     >
       <div class='card-body'>{children}</div>
@@ -62,7 +62,7 @@ export const DropdownCoinItem: Component<DropdownCoinItemProps> = ({
             class='rounded-full border shadow-xl bg-light mr-2 h-8'
             src={thumb}
           />
-          <p>
+          <p class='text-base-content'>
             {name}&nbsp;({symbol})
           </p>
         </div>

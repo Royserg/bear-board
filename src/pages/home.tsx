@@ -3,6 +3,7 @@ import { TransitionGroup } from 'solid-transition-group';
 import { CoinPriceCard } from '../components/coin-price-card/coin-price-card';
 import { CoinGeckoFooter } from '../components/footer/coin-gecko-footer';
 import { Search } from '../components/search/search';
+import { ThemeWidget } from '../components/theme-widget/theme-widget';
 import { FullPageWrapper } from '../layouts/fullpage';
 import { useSelector } from '../store';
 
@@ -12,7 +13,10 @@ export const Home = () => {
   } = useSelector();
 
   return (
-    <FullPageWrapper classNames='bg-gray-100 text-dark-600 px-8 py-2'>
+    <FullPageWrapper classNames='bg-base-200 px-8 py-2 relative'>
+      {/* Widgets */}
+      <ThemeWidget />
+
       <div class='mt-5'></div>
 
       <Search />
