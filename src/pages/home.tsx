@@ -13,7 +13,7 @@ export const Home = () => {
   } = useSelector();
 
   return (
-    <FullPageWrapper classNames='bg-base-200 px-8 py-2 relative'>
+    <FullPageWrapper classNames='px-8 py-2 relative'>
       {/* Widgets */}
       <ThemeWidget />
 
