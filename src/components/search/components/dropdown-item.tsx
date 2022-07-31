@@ -13,7 +13,7 @@ export const DropdownItem: ParentComponent<DropdownItemProps> = ({
 }) => {
   return (
     <div
-      class={`card card-compact w-full bg-base-100 hover:bg-base-200 border-2 shadow text-primary-content cursor-pointer ${classNames}`}
+      class={`rounded-lg card card-compact w-full bg-primary hover:bg-primary-focus border-2 border-base-200 shadow text-primary-content cursor-pointer ${classNames}`}
       onClick={onClick}
     >
       <div class='card-body'>{children}</div>
@@ -59,15 +59,15 @@ export const DropdownCoinItem: Component<DropdownCoinItemProps> = ({
       <div class='flex justify-between items-center text-lg'>
         <div class='flex grow justify-start'>
           <img
-            class='rounded-full border shadow-xl bg-light mr-2 h-8'
+            class='rounded-full border shadow-xl bg-white mr-2 h-8'
             src={thumb}
           />
-          <p class='text-base-content'>
+          <p class='text-primary-content'>
             {name}&nbsp;({symbol})
           </p>
         </div>
 
-        <p class='flex-none text-right text-base text-slate-400'>
+        <p class='flex-none text-right text-base-content'>
           {market_cap_rank && `#${market_cap_rank}`}
         </p>
       </div>

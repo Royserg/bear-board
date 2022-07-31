@@ -125,7 +125,10 @@ export const Search: Component<SearchProps> = () => {
                     onClick={() => handleShowNext(true)}
                   >
                     <div class='w-full flex justify-center'>
-                      <BsCaretUp class='text-base-content' size={ICON_SIZE} />
+                      <BsCaretUp
+                        class='text-primary-content'
+                        size={ICON_SIZE}
+                      />
                     </div>
                   </DropdownItem>
                 </Show>
@@ -147,7 +150,10 @@ export const Search: Component<SearchProps> = () => {
                     onClick={() => handleShowNext()}
                   >
                     <div class='w-full flex justify-center'>
-                      <BsCaretDown class='text-base-content' size={ICON_SIZE} />
+                      <BsCaretDown
+                        class='text-primary-content'
+                        size={ICON_SIZE}
+                      />
                     </div>
                   </DropdownItem>
                 </Show>
