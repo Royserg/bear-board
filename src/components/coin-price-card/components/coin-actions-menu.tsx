@@ -12,7 +12,7 @@ interface CoinActionsMenuProps {
 }
 
 const menuItemClasses =
-  'w-full hover:bg-white/[.2] tooltip tooltip-right tooltip-primary';
+  'w-full hover:bg-white/[.1] tooltip tooltip-right tooltip-primary';
 
 export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
   coinId,
@@ -58,7 +58,7 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
           <Show when={shouldConfirmDelete()} fallback={DeleteButton}>
             {/* Confirm delete */}
             <div
-              class={`${menuItemClasses} bg-green-600`}
+              class={`${menuItemClasses} bg-green-600 hover:bg-green-500`}
               data-tip='Click to confirm'
               onClick={() => deleteCoinId(coinId)}
             >
