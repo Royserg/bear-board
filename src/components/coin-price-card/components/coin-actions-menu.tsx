@@ -11,7 +11,8 @@ interface CoinActionsMenuProps {
   onReload: () => void;
 }
 
-const menuItemClasses = 'w-full tooltip tooltip-right';
+const menuItemClasses =
+  'w-full hover:bg-white/[.1] tooltip tooltip-right tooltip-primary';
 
 export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
   coinId,
@@ -29,7 +30,7 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
       data-tip='delete'
       onClick={() => setShouldConfirmDelete(true)}
     >
-      <BsTrash size={MENU_ITEM_ICON_SIZE} />
+      <BsTrash class='text-white' size={MENU_ITEM_ICON_SIZE} />
     </div>
   );
 
@@ -42,13 +43,13 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
       {/* Dropdown content */}
       <ul
         tabindex='0'
-        class='dropdown-content menu p-3  shadow bg-base-100 rounded-box'
+        class='dropdown-content menu p-3  shadow rounded-box bg-neutral'
         onMouseLeave={() => setShouldConfirmDelete(false)}
       >
         {/* Reload */}
         <li>
           <div class={menuItemClasses} data-tip='reload' onClick={onReload}>
-            <BsArrowRepeat size={MENU_ITEM_ICON_SIZE} />
+            <BsArrowRepeat class='text-white' size={MENU_ITEM_ICON_SIZE} />
           </div>
         </li>
 
@@ -57,7 +58,7 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
           <Show when={shouldConfirmDelete()} fallback={DeleteButton}>
             {/* Confirm delete */}
             <div
-              class={`${menuItemClasses} bg-green-600`}
+              class={`${menuItemClasses} bg-green-600 hover:bg-green-500`}
               data-tip='Click to confirm'
               onClick={() => deleteCoinId(coinId)}
             >
