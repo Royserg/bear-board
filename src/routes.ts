@@ -1,8 +1,8 @@
-import { lazy } from 'solid-js';
 import type { RouteDefinition } from 'solid-app-router';
+import { lazy } from 'solid-js';
 
-import { Home } from './pages/home';
 import { AboutData } from './pages/about.data';
+import { Home } from './pages/home';
 
 export const routes: RouteDefinition[] = [
   {

@@ -1,7 +1,7 @@
 import './index.css';
 
-import { render } from 'solid-js/web';
 import { Router } from 'solid-app-router';
+import { render } from 'solid-js/web';
 import App from './app';
 import { StoreProvider } from './store';
 
