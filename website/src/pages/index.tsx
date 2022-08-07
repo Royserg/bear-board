@@ -2,21 +2,53 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import BearBoardLogo from '../components/bear-board-logo';
+import { BsApple, BsWindows } from 'react-icons/bs';
+import { VscTerminalLinux } from 'react-icons/vsc';
 
-interface PlatformInfo {
-  platform?: string;
-  userAgent?: string;
-}
+type UserPlatform = 'Mac' | 'Windows' | 'Linux' | 'Other';
 
 const Home: NextPage = () => {
-  const [platformInfo, setPlatformInfo] = useState<PlatformInfo>();
+  const [userPlatform, setUserPlatform] = useState<UserPlatform>();
 
   useEffect(() => {
-    setPlatformInfo({
-      platform: navigator?.platform,
-      userAgent: navigator?.userAgent,
-    });
+    const userAgent = navigator.userAgent;
+    const platformInfo = userAgent?.split(' ')[1];
+
+    if (platformInfo) {
+      if (platformInfo.includes('Macintosh')) {
+        setUserPlatform('Mac');
+        return;
+      }
+
+      if (platformInfo.includes('Windows')) {
+        setUserPlatform('Windows');
+        return;
+      }
+
+      if (platformInfo.includes('Linux')) {
+        setUserPlatform('Linux');
+        return;
+      }
+
+      setUserPlatform('Other');
+    }
   }, []);
+
+  const iconClassNames = 'text-xl mr-3';
+  const platformIcon = () => {
+    if (userPlatform === 'Other') {
+      return;
+    }
+    if (userPlatform === 'Windows') {
+      return <BsWindows className={iconClassNames} />;
+    }
+    if (userPlatform === 'Mac') {
+      return <BsApple className={iconClassNames} />;
+    }
+    if (userPlatform === 'Linux') {
+      return <VscTerminalLinux className={iconClassNames} />;
+    }
+  };
 
   return (
     <div className='bg-slate-100'>
@@ -43,22 +75,12 @@ const Home: NextPage = () => {
           <div className='mt-7'></div>
 
           <div>
-            <button className='rounded-full p-5 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-700 hover:text-amber-700 hover:shadow-xl transition-colors'>
-              Download PLATFORM
+            <button className='rounded-full p-5 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex '>
+              {platformIcon()}
+              Download
             </button>
-            <p className='mt-1 text-center'>Other platforms</p>
+            <p className='mt-1 text-center text-sm'>Other platforms</p>
           </div>
-
-          <code className='w-3/4 h-20 text-gray-600'>
-            <div className='break-words w-100 h-10'>
-              Navigator platform:
-              <p>{platformInfo?.platform}</p>
-            </div>
-            <div className='mt-4 w-100 h-10'>
-              Navigator userAgent:
-              <p className='break-words h-20'>{platformInfo?.userAgent}</p>
-            </div>
-          </code>
         </section>
 
         {/* <section>TODO: Features</section> */}
