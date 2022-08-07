@@ -38,8 +38,8 @@ jobs:
       - name: Install webkit2gtk (ubuntu only)
         if: matrix.NAME == 'linux'
         run: >
-          sudo apt-get update |
-          sudo apt-get install -y webkit2gtk-4.0 |
+          sudo apt-get update &&
+          sudo apt-get install -y webkit2gtk-4.0
 
       - name: Install app dependencies and build it
         run: pnpm install && pnpm build
