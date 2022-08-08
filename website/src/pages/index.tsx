@@ -75,7 +75,7 @@ const Home: NextPage = () => {
           <div className='mt-7'></div>
 
           <div>
-            <button className='rounded-full p-5 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex '>
+            <button className='rounded-full py-5 px-16 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex'>
               {platformIcon()}
               Download
             </button>
