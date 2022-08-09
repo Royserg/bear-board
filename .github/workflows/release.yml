@@ -1,9 +1,10 @@
 name: Release
 
 on:
-  pull_request:
+  workflow_run:
+    workflows: ['Test Builds']
     types:
-      - closed
+      - completed
     branches:
       - production
 
