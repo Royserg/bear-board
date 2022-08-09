@@ -20,7 +20,9 @@ jobs:
         uses: endre-spotlab/fast-forward-js-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          success_message: 'Success! Fast forwarded ***target_base*** to ***source_head***! ```git checkout target_base && git merge source_head --ff-only``` '
+          success_message:
+            'Success! Fast forwarded ***source_head*** to ***target_base***!
+            ```git checkout target_base && git merge source_head --ff-only``` '
           failure_message: 'Failed! Cannot do fast forward!'
           staging_branch: 'main'
           production_branch: 'production'
