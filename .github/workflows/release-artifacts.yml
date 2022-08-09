@@ -1,5 +1,8 @@
 name: Release Artifacts
 
+# TODO: run build and tests on pull requests
+# on: pull_request
+
 on: workflow_dispatch
 
 jobs:
@@ -42,14 +45,14 @@ jobs:
           sudo apt-get install -y webkit2gtk-4.0
 
       - name: Install app dependencies and build it
-        run: pnpm install && pnpm build
+        run: pnpm install --frozen-lockfile && pnpm build
 
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
+          tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
