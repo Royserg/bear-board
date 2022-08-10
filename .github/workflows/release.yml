@@ -8,6 +8,10 @@ on:
     branches:
       - production
 
+  push:
+    branches:
+      - production
+
 jobs:
   create-draft-release:
     runs-on: ubuntu-latest
