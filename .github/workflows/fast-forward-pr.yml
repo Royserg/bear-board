@@ -7,7 +7,7 @@ on:
 jobs:
   fast_forward_job:
     name: Fast Forward
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/fast-forward')
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/ff')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code into workspace directory
@@ -21,8 +21,8 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           success_message:
-            'Success! Fast forwarded ***source_head*** to ***target_base***!
-            ```git checkout target_base && git merge source_head --ff-only``` '
+            'Success! Fast forwarded ***source_head*** to ***target_base***!' |
+            '```git checkout target_base && git merge source_head --ff-only``` '
           failure_message: 'Failed! Cannot do fast forward!'
           staging_branch: 'main'
           production_branch: 'production'
