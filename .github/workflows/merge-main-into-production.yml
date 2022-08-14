@@ -1,0 +1,28 @@
+name: 'Run Merge: Main -> Production'
+
+on: workflow_dispatch
+
+jobs:
+  merge-main-into-production:
+    name: 'Merge main into production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.DEV_OPS_BOT_TOKEN }}
+
+      - name: Merge main -> production
+        env:
+          # Needs custom token to trigger other workflows
+          GITHUB_TOKEN: ${{ secrets.DEV_OPS_BOT_TOKEN }}
+          GIT_AUTHOR_NAME: devOpsBot
+          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: devOpsBot
+          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+        run: |
+          git fetch origin production
+          git checkout production
+          git merge origin/main --ff-only
+          git push origin production

@@ -1,0 +1,150 @@
+name: Production Release
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  create-release:
+    name: Create Production release
+    runs-on: ubuntu-latest
+    outputs:
+      latest_release_id: ${{ steps.get_latest_release_id.outputs.result }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.9.0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.15
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile -D
+
+      - name: Trigger semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_AUTHOR_NAME: devOpsBot
+          GIT_COMMITTER_NAME: devOpsBot
+        run: pnpm dlx semantic-release
+
+      # Get generated release id
+      - name: Get Latest Release id
+        id: get_latest_release_id
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data } = await github.rest.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })
+
+            return data.id
+
+      - name: Set latest release to draft
+        uses: actions/github-script@v6
+        env:
+          release_id: ${{ steps.get_latest_release_id.outputs.result }}
+        with:
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: true,
+              prerelease: false
+            })
+
+  build-app-and-attach-to-release:
+    name: Build app & add to release
+    needs: create-release
+    strategy:
+      fail-fast: false
+      matrix:
+        # platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: production
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.9.0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.15
+          cache: 'pnpm'
+
+      - name: Install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update &&
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install app dependencies and build it
+        run: pnpm install --frozen-lockfile && pnpm build
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ needs.create-release.outputs.latest_release_id }}
+
+      - name: Publish latest release
+        uses: actions/github-script@v6
+        env:
+          release_id: ${{ needs.create-release.outputs.latest_release_id }}
+        with:
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: false,
+              prerelease: false
+            })
+
+  update-main-branch:
+    name: Merge production -> main
+    needs: build-app-and-attach-to-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: production
+          # Uses default GITHUB_TOKEN - won't trigger other workflows
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge production -> main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_AUTHOR_NAME: devOpsBot
+          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: devOpsBot
+          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+        run: |
+          git fetch origin main
+          git checkout main
+          git merge origin/production --ff-only
+          git push origin main
