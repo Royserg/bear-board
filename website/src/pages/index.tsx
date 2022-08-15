@@ -1,14 +1,24 @@
+import { useQuery } from '@tanstack/react-query';
 import type { NextPage } from 'next';
+import Image from 'next/future/image';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import BearBoardLogo from '../components/bear-board-logo';
 import { BsApple, BsWindows } from 'react-icons/bs';
+import { FaDownload } from 'react-icons/fa';
 import { VscTerminalLinux } from 'react-icons/vsc';
+import appPreview from '../../public/assets/images/app-preview.png';
+import { getLatestRelease } from '../api/github';
+import BearBoardLogo from '../components/bear-board-logo';
 
 type UserPlatform = 'Mac' | 'Windows' | 'Linux' | 'Other';
 
 const Home: NextPage = () => {
   const [userPlatform, setUserPlatform] = useState<UserPlatform>();
+
+  const { isLoading, error, data, isFetching } = useQuery(
+    ['releaseData'],
+    getLatestRelease
+  );
 
   useEffect(() => {
     const userAgent = navigator.userAgent;
@@ -74,20 +84,110 @@ const Home: NextPage = () => {
           {/* Divider */}
           <div className='mt-7'></div>
 
-          <div>
+          <div className='flex flex-col items-center'>
             <button className='rounded-full py-5 px-16 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex'>
               {platformIcon()}
               Download
             </button>
-            <p className='mt-1 text-center text-sm'>Other platforms</p>
+            <a href='#all-platforms' className='mt-1 text-center text-sm'>
+              Other platforms
+            </a>
           </div>
         </section>
 
-        {/* <section>TODO: Features</section> */}
-        {/* <section>TODO: Version & releases</section> */}
+        <div className='mt-10'></div>
+
+        {/* App Preview */}
+        <section className=' w-3/4 bg-slate-100 flex justify-center items-center'>
+          <Image
+            className='shadow-lg'
+            src={appPreview}
+            alt='Main application view'
+          />
+        </section>
+
+        {/* Divider */}
+        <div className='mt-10'></div>
+
+        {/* Download section */}
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <section
+            id='all-platforms'
+            className='w-full sm:w-full md:w-3/4 lg:w-2/4'
+          >
+            <h3 className='text-md text-gray-700 mb-2 font-semibold tracking-wide'>
+              BearBoard: {data?.name}
+            </h3>
+
+            <div className='flex flex-col divide-y'>
+              {/* MacOS */}
+              {data?.assets[3] && (
+                <div className={platformDownloadBoxClasses}>
+                  <BsApple className={iconClassNames} />
+                  <a href={data?.assets[3].browser_download_url}>
+                    {data?.assets[3].name}
+                  </a>
+                  <a
+                    href={data?.assets[3].browser_download_url}
+                    className={assetDownloadBtnClasses}
+                  >
+                    <FaDownload className={iconClassNames} />
+                    Download
+                  </a>
+                </div>
+              )}
+
+              {/* Windows */}
+              {data?.assets[4] && (
+                <div className={platformDownloadBoxClasses}>
+                  <BsWindows className={iconClassNames} />
+                  <a href={data?.assets[4].browser_download_url}>
+                    {data?.assets[4].name}
+                  </a>
+                  <a
+                    href={data?.assets[4].browser_download_url}
+                    className={assetDownloadBtnClasses}
+                  >
+                    <FaDownload className={iconClassNames} />
+                    Download
+                  </a>
+                </div>
+              )}
+
+              {/* Ubuntu */}
+              {data?.assets[1] && (
+                <div className={platformDownloadBoxClasses}>
+                  <VscTerminalLinux className={iconClassNames} />
+                  <a href={data?.assets[1].browser_download_url}>
+                    {data?.assets[1].name}
+                  </a>
+                  <a
+                    href={data?.assets[1].browser_download_url}
+                    className={assetDownloadBtnClasses}
+                  >
+                    <FaDownload className={iconClassNames} />
+                    Download
+                  </a>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* Divider */}
+        <div className='mt-10'></div>
+
+        {/* TODO: footer */}
+        {/* <footer></footer> */}
       </main>
     </div>
   );
 };
+
+const assetDownloadBtnClasses =
+  'flex p-2 rounded-xl hover:text-amber-500 hover:shadow-sm transition-colors';
+const platformDownloadBoxClasses = 'p-3 flex justify-between items-center';
 
 export default Home;
