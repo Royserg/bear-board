@@ -14,6 +14,8 @@ type UserPlatform = 'Mac' | 'Windows' | 'Linux' | 'Other';
 
 const Home: NextPage = () => {
   const [userPlatform, setUserPlatform] = useState<UserPlatform>();
+  const [platformAssetIndex, setPlatformAssetIndex] =
+    useState<PlatformAssetIndex>();
 
   const { isLoading, error, data, isFetching } = useQuery(
     ['releaseData'],
@@ -27,16 +29,19 @@ const Home: NextPage = () => {
     if (platformInfo) {
       if (platformInfo.includes('Macintosh')) {
         setUserPlatform('Mac');
+        setPlatformAssetIndex(3);
         return;
       }
 
       if (platformInfo.includes('Windows')) {
         setUserPlatform('Windows');
+        setPlatformAssetIndex(4);
         return;
       }
 
       if (platformInfo.includes('Linux')) {
         setUserPlatform('Linux');
+        setPlatformAssetIndex(1);
         return;
       }
 
@@ -93,6 +98,20 @@ const Home: NextPage = () => {
               Other platforms
             </a>
           </div>
+          {platformAssetIndex && (
+            <div className='flex flex-col items-center'>
+              <a
+                href={data?.assets[platformAssetIndex]?.browser_download_url}
+                className='rounded-full py-5 px-16 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex'
+              >
+                {platformIcon()}
+                Download
+              </a>
+              <a href='#all-platforms' className='mt-1 text-center text-sm'>
+                Other platforms
+              </a>
+            </div>
+          )}
         </section>
 
         <div className='mt-10'></div>
