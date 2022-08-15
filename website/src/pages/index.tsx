@@ -1,54 +1,38 @@
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import type { NextPage } from 'next';
+import Image from 'next/future/image';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import appPreview from '../../public/assets/images/app-preview.png';
+import { AssetsPlatformIndex, getLatestRelease, Release } from '../api/github';
 import BearBoardLogo from '../components/bear-board-logo';
-import { BsApple, BsWindows } from 'react-icons/bs';
-import { VscTerminalLinux } from 'react-icons/vsc';
-
-type UserPlatform = 'Mac' | 'Windows' | 'Linux' | 'Other';
+import { PlatformDownloadRow } from '../components/platform-download-row';
+import { PlatformIcon } from '../components/platform-icon';
+import { useUserPlatform } from '../hooks';
 
 const Home: NextPage = () => {
-  const [userPlatform, setUserPlatform] = useState<UserPlatform>();
+  const userPlatform = useUserPlatform();
 
-  useEffect(() => {
-    const userAgent = navigator.userAgent;
-    const platformInfo = userAgent?.split(' ')[1];
+  const { isLoading, error, data } = useQuery<Release, AxiosError>(
+    ['releaseData'],
+    getLatestRelease
+  );
 
-    if (platformInfo) {
-      if (platformInfo.includes('Macintosh')) {
-        setUserPlatform('Mac');
-        return;
-      }
+  if (isLoading) {
+    return (
+      <div className='w-screen h-screen flex justify-center items-center text-2xl font-bold'>
+        Loading...
+      </div>
+    );
+  }
 
-      if (platformInfo.includes('Windows')) {
-        setUserPlatform('Windows');
-        return;
-      }
-
-      if (platformInfo.includes('Linux')) {
-        setUserPlatform('Linux');
-        return;
-      }
-
-      setUserPlatform('Other');
-    }
-  }, []);
-
-  const iconClassNames = 'text-xl mr-3';
-  const platformIcon = () => {
-    if (userPlatform === 'Other') {
-      return;
-    }
-    if (userPlatform === 'Windows') {
-      return <BsWindows className={iconClassNames} />;
-    }
-    if (userPlatform === 'Mac') {
-      return <BsApple className={iconClassNames} />;
-    }
-    if (userPlatform === 'Linux') {
-      return <VscTerminalLinux className={iconClassNames} />;
-    }
-  };
+  if (error) {
+    return (
+      <div className='w-screen h-screen flex justify-center items-center text-2xl font-bold'>
+        Error occurred: {error.message}
+      </div>
+    );
+  }
 
   return (
     <div className='bg-slate-100'>
@@ -74,17 +58,81 @@ const Home: NextPage = () => {
           {/* Divider */}
           <div className='mt-7'></div>
 
-          <div>
-            <button className='rounded-full py-5 px-16 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex'>
-              {platformIcon()}
-              Download
-            </button>
-            <p className='mt-1 text-center text-sm'>Other platforms</p>
+          {/* Main Download button */}
+          {userPlatform && (
+            <div className='flex flex-col items-center'>
+              <a
+                href={
+                  data?.assets[AssetsPlatformIndex[userPlatform]]
+                    ?.browser_download_url
+                }
+                className='rounded-full py-5 px-16 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex'
+              >
+                <PlatformIcon platform={userPlatform} />
+                Download
+              </a>
+              <a href='#all-platforms' className='mt-1 text-center text-sm'>
+                Other platforms
+              </a>
+            </div>
+          )}
+        </section>
+
+        <div className='mt-14'></div>
+
+        {/* App Preview */}
+        <section className=' w-3/4 bg-slate-100 flex justify-center items-center'>
+          <Image
+            className='shadow-lg rounded-lg'
+            src={appPreview}
+            alt='Main application view'
+          />
+        </section>
+
+        {/* Divider */}
+        <div className='mt-14'></div>
+
+        {/* Download section */}
+        <section
+          id='all-platforms'
+          className='w-full sm:w-full md:w-3/4 lg:w-2/4'
+        >
+          <h3 className='text-md text-gray-700 mb-2 font-semibold tracking-wide'>
+            BearBoard: {data?.name}
+          </h3>
+
+          <div className='flex flex-col divide-y'>
+            {/* MacOS */}
+            {data?.assets[AssetsPlatformIndex.Mac] && (
+              <PlatformDownloadRow
+                platform='Mac'
+                assetData={data.assets[AssetsPlatformIndex.Mac]}
+              />
+            )}
+
+            {/* Windows */}
+            {data?.assets[AssetsPlatformIndex.Windows] && (
+              <PlatformDownloadRow
+                platform='Windows'
+                assetData={data.assets[AssetsPlatformIndex.Windows]}
+              />
+            )}
+
+            {/* Linux */}
+            {data?.assets[AssetsPlatformIndex.Linux] && (
+              <PlatformDownloadRow
+                platform='Linux'
+                assetData={data.assets[AssetsPlatformIndex.Linux]}
+              />
+            )}
           </div>
         </section>
 
-        {/* <section>TODO: Features</section> */}
-        {/* <section>TODO: Version & releases</section> */}
+        {/* Divider */}
+        <div className='mt-10'></div>
+
+        {/* TODO: footer */}
+        {/* <footer></footer> */}
       </main>
     </div>
   );
