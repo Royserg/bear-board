@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Platform } from '../utils/interfaces';
 
 const REPO_GH_API_URL = 'https://api.github.com/repos/royserg/bear-board';
 
@@ -23,6 +24,13 @@ export interface Release {
   created_at: string;
   published_at: string;
   assets: ReleaseAsset[];
+}
+
+export enum AssetsPlatformIndex {
+  Other = 0,
+  Linux = 1,
+  Mac = 3,
+  Windows = 4,
 }
 
 export const getLatestRelease = async (): Promise<Release> => {

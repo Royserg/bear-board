@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-
-export type Platform = 'Mac' | 'Windows' | 'Linux' | 'Other';
+import { Platform } from '../utils/interfaces';
 
 export const useUserPlatform = () => {
   const [userPlatform, setUserPlatform] = useState<Platform>();
