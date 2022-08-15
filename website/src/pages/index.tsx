@@ -9,15 +9,23 @@ import { VscTerminalLinux } from 'react-icons/vsc';
 import appPreview from '../../public/assets/images/app-preview.png';
 import { getLatestRelease, Release } from '../api/github';
 import BearBoardLogo from '../components/bear-board-logo';
+import { useUserPlatform } from '../hooks';
 
-type UserPlatform = 'Mac' | 'Windows' | 'Linux' | 'Other';
+enum AssetsPlatformIndex {
+  Linux = 1,
+  Mac = 3,
+  Windows = 4,
+}
+
 type PlatformAssetIndex = 1 | 3 | 4;
 interface AxiosError {
   message: string;
 }
 
 const Home: NextPage = () => {
-  const [userPlatform, setUserPlatform] = useState<UserPlatform>();
+  const userPlatform = useUserPlatform();
+
+  // const [userPlatform, setUserPlatform] = useState<Platform>();
   const [platformAssetIndex, setPlatformAssetIndex] =
     useState<PlatformAssetIndex>();
 
@@ -27,31 +35,18 @@ const Home: NextPage = () => {
   );
 
   useEffect(() => {
-    const userAgent = navigator.userAgent;
-    const platformInfo = userAgent?.split(' ')[1];
-
-    if (platformInfo) {
-      if (platformInfo.includes('Macintosh')) {
-        setUserPlatform('Mac');
-        setPlatformAssetIndex(3);
-        return;
-      }
-
-      if (platformInfo.includes('Windows')) {
-        setUserPlatform('Windows');
-        setPlatformAssetIndex(4);
-        return;
-      }
-
-      if (platformInfo.includes('Linux')) {
-        setUserPlatform('Linux');
-        setPlatformAssetIndex(1);
-        return;
-      }
-
-      setUserPlatform('Other');
+    if (userPlatform === 'Mac') {
+      return setPlatformAssetIndex(3);
     }
-  }, []);
+
+    if (userPlatform === 'Windows') {
+      return setPlatformAssetIndex(4);
+    }
+
+    if (userPlatform === 'Linux') {
+      return setPlatformAssetIndex(1);
+    }
+  }, [userPlatform]);
 
   const iconClassNames = 'text-xl mr-3';
   const platformIcon = () => {
