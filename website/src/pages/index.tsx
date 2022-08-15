@@ -7,17 +7,21 @@ import { BsApple, BsWindows } from 'react-icons/bs';
 import { FaDownload } from 'react-icons/fa';
 import { VscTerminalLinux } from 'react-icons/vsc';
 import appPreview from '../../public/assets/images/app-preview.png';
-import { getLatestRelease } from '../api/github';
+import { getLatestRelease, Release } from '../api/github';
 import BearBoardLogo from '../components/bear-board-logo';
 
 type UserPlatform = 'Mac' | 'Windows' | 'Linux' | 'Other';
+type PlatformAssetIndex = 1 | 3 | 4;
+interface AxiosError {
+  message: string;
+}
 
 const Home: NextPage = () => {
   const [userPlatform, setUserPlatform] = useState<UserPlatform>();
   const [platformAssetIndex, setPlatformAssetIndex] =
     useState<PlatformAssetIndex>();
 
-  const { isLoading, error, data, isFetching } = useQuery(
+  const { isLoading, error, data } = useQuery<Release, AxiosError>(
     ['releaseData'],
     getLatestRelease
   );
@@ -65,6 +69,22 @@ const Home: NextPage = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className='w-screen h-screen flex justify-center items-center text-2xl font-bold'>
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='w-screen h-screen flex justify-center items-center text-2xl font-bold'>
+        Error occurred: {error.message}
+      </div>
+    );
+  }
+
   return (
     <div className='bg-slate-100'>
       <Head>
@@ -89,15 +109,6 @@ const Home: NextPage = () => {
           {/* Divider */}
           <div className='mt-7'></div>
 
-          <div className='flex flex-col items-center'>
-            <button className='rounded-full py-5 px-16 border-2 border-gray-500 text-gray-700 shadow-md hover:border-amber-500 hover:text-amber-500 hover:shadow-xl transition-colors flex'>
-              {platformIcon()}
-              Download
-            </button>
-            <a href='#all-platforms' className='mt-1 text-center text-sm'>
-              Other platforms
-            </a>
-          </div>
           {platformAssetIndex && (
             <div className='flex flex-col items-center'>
               <a
@@ -114,7 +125,7 @@ const Home: NextPage = () => {
           )}
         </section>
 
-        <div className='mt-10'></div>
+        <div className='mt-14'></div>
 
         {/* App Preview */}
         <section className=' w-3/4 bg-slate-100 flex justify-center items-center'>
@@ -126,7 +137,7 @@ const Home: NextPage = () => {
         </section>
 
         {/* Divider */}
-        <div className='mt-10'></div>
+        <div className='mt-14'></div>
 
         {/* Download section */}
         {isLoading ? (
