@@ -1,3 +1,10 @@
+## [1.0.1-alpha.1](https://github.com/Royserg/bear-board/compare/v1.0.0...v1.0.1-alpha.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* **fe:** display ctx menu on the left side on smaller screens ([01273a0](https://github.com/Royserg/bear-board/commit/01273a0720d8a2860e9c8fe21790733fb45f826c))
+
 # 1.0.0 (2022-08-14)
 
 
