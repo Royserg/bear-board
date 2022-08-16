@@ -11,8 +11,7 @@ interface CoinActionsMenuProps {
   onReload: () => void;
 }
 
-const menuItemClasses =
-  'w-full hover:bg-white/[.1] tooltip tooltip-right tooltip-primary';
+const menuItemClasses = 'w-full hover:bg-white/[.1] tooltip  tooltip-primary';
 
 export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
   coinId,
