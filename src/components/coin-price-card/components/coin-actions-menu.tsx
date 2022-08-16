@@ -1,6 +1,6 @@
 import { BiMenuAltRight } from 'solid-icons/bi';
 import { BsArrowRepeat, BsCheck2, BsTrash } from 'solid-icons/bs';
-import { Component, createSignal, Show } from 'solid-js';
+import { Component, createSignal, onCleanup, onMount, Show } from 'solid-js';
 import { useSelector } from '../../../store';
 
 const MENU_ICON_SIZE = 24;
@@ -11,8 +11,7 @@ interface CoinActionsMenuProps {
   onReload: () => void;
 }
 
-const menuItemClasses =
-  'w-full hover:bg-white/[.1] tooltip tooltip-right tooltip-primary';
+const menuItemClasses = 'w-full hover:bg-white/[.1] tooltip  tooltip-primary';
 
 export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
   coinId,
@@ -23,6 +22,19 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
   } = useSelector();
 
   const [shouldConfirmDelete, setShouldConfirmDelete] = createSignal(false);
+  const [windowWidth, setWindowWidth] = createSignal(window.innerWidth);
+
+  const windowResizeListener = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  onMount(() => {
+    window.addEventListener('resize', windowResizeListener);
+  });
+
+  onCleanup(() => {
+    window.removeEventListener('resize', windowResizeListener);
+  });
 
   const DeleteButton = () => (
     <div
@@ -35,7 +47,13 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
   );
 
   return (
-    <div class='dropdown absolute right-2 top-2'>
+    <div
+      // On smaller screens, display context dropdown on the left side
+      // It won't go off the screen from right side
+      class={`dropdown absolute right-2 top-2 ${
+        windowWidth() < 858 && 'dropdown-end'
+      }`}
+    >
       <label tabindex='0' class='btn btn-xs btn-circle btn-ghost'>
         <BiMenuAltRight size={MENU_ICON_SIZE} />
       </label>
@@ -43,7 +61,7 @@ export const CoinActionsMenu: Component<CoinActionsMenuProps> = ({
       {/* Dropdown content */}
       <ul
         tabindex='0'
-        class='dropdown-content menu p-3  shadow rounded-box bg-neutral'
+        class='dropdown-content menu p-3 shadow rounded-box bg-neutral'
         onMouseLeave={() => setShouldConfirmDelete(false)}
       >
         {/* Reload */}
