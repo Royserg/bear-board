@@ -1,3 +1,10 @@
+## [1.0.2-alpha.1](https://github.com/Royserg/bear-board/compare/v1.0.1...v1.0.2-alpha.1) (2022-08-19)
+
+
+### Bug Fixes
+
+* **app:** show them widget on small screen ([9f6cf63](https://github.com/Royserg/bear-board/commit/9f6cf63c8f330e955d0c3992e5dd540cf701ae31))
+
 ## [1.0.1](https://github.com/Royserg/bear-board/compare/v1.0.0...v1.0.1) (2022-08-16)
 
 
