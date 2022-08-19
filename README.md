@@ -55,6 +55,3 @@ run the app
 ![Two-Tone](./icons/bear-icon-two-tone.svg)
 ![Two-Tone-Border](./icons/bear-icon-two-tone-border.svg)
 
-## Memes:
-
-![tauri-vs-electron](./docs/tauri-vs-electron.png)
