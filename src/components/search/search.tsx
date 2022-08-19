@@ -88,7 +88,7 @@ export const Search: Component<SearchProps> = () => {
   });
 
   return (
-    <div class='mx-auto w-full max-w-lg h-10 text-center z-50'>
+    <div class='mx-auto sm:w-2/3 lg:w-full max-w-lg h-10 text-center z-50'>
       <div class='dropdown w-full mx-auto'>
         <div class='input-group mb-2 shadow-xl rounded-l-lg'>
           {/* Search input prefix search icon button */}
