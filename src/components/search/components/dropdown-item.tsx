@@ -15,6 +15,7 @@ export const DropdownItem: ParentComponent<DropdownItemProps> = ({
     <div
       class={`rounded-lg card card-compact w-full bg-primary hover:bg-primary-focus border-2 border-base-200 shadow text-primary-content cursor-pointer ${classNames}`}
       onClick={onClick}
+      data-testid='dropdown-item'
     >
       <div class='card-body'>{children}</div>
     </div>
