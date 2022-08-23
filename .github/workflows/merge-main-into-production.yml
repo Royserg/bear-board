@@ -3,8 +3,13 @@ name: 'Run Merge: Main -> Production'
 on: workflow_dispatch
 
 jobs:
+  test-app-builds:
+    name: 'Test app builds'
+    uses: royserg/bear-board/.github/workflows/test-builds.yml@main
+
   merge-main-into-production:
     name: 'Merge main into production'
+    needs: [test-app-builds]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

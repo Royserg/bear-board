@@ -1,16 +1,17 @@
 name: Test Builds
 
 on:
-  pull_request:
-    branches-ignore:
-      - production
+  workflow_call:
 
 jobs:
-  test-tauri:
+  test-tauri-builds:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        # Comment out windows as building check will happen on alpha channel
+        # Windows fails when version is set to pre-release like `0.1.4-alpha`
+        # platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
