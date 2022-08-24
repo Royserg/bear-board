@@ -1,4 +1,11 @@
-import { Component, createResource, ErrorBoundary, onCleanup, onMount, Show } from 'solid-js';
+import {
+  Component,
+  createResource,
+  ErrorBoundary,
+  onCleanup,
+  onMount,
+  Show,
+} from 'solid-js';
 import { CoinData } from '../../models/coin-price';
 import { getCoinData } from '../../services/backend';
 import { Spinner } from '../spinner/spinner';
