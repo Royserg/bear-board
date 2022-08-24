@@ -1,4 +1,4 @@
-import { Component, createEffect, createResource, ErrorBoundary, onCleanup, Show } from 'solid-js';
+import { Component, createResource, ErrorBoundary, onCleanup, onMount, Show } from 'solid-js';
 import { CoinData } from '../../models/coin-price';
 import { getCoinData } from '../../services/backend';
 import { Spinner } from '../spinner/spinner';
@@ -22,7 +22,8 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
   const [data, { refetch }] = createResource<CoinData>(fetchCoinData);
 
   let fetchDataTimer: NodeJS.Timer;
-  createEffect(() => {
+
+  onMount(() => {
     // Refetch coin data every minute
     fetchDataTimer = setInterval(() => refetch(), REFETCH_DATA_INTERVAL);
   });
@@ -33,7 +34,7 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
 
   return (
     <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-base-100 shadow-xl relative transition-all duration-300'>
-      <Show when={!data.loading} fallback={<Spinner />}>
+      <Show when={!!data.latest} fallback={<Spinner />}>
         <CoinActionsMenu coinId={coinId} onReload={() => refetch()} />
 
         <ErrorBoundary fallback={(error) => <CoinPriceError error={error} />}>
