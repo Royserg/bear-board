@@ -1,4 +1,4 @@
-import { Component, createResource, ErrorBoundary, Show } from 'solid-js';
+import { Component, createEffect, createResource, ErrorBoundary, onCleanup, Show } from 'solid-js';
 import { CoinData } from '../../models/coin-price';
 import { getCoinData } from '../../services/backend';
 import { Spinner } from '../spinner/spinner';
@@ -9,6 +9,9 @@ interface CoinPriceCardProps {
 }
 
 export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
+  // 1 minute = 1 second * 60
+  const REFETCH_DATA_INTERVAL = 1000 * 60;
+
   const fetchCoinData = async () => {
     try {
       return await getCoinData({ coinId });
@@ -17,6 +20,16 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
     }
   };
   const [data, { refetch }] = createResource<CoinData>(fetchCoinData);
+
+  let fetchDataTimer: NodeJS.Timer;
+  createEffect(() => {
+    // Refetch coin data every minute
+    fetchDataTimer = setInterval(() => refetch(), REFETCH_DATA_INTERVAL);
+  });
+
+  onCleanup(() => {
+    clearInterval(fetchDataTimer);
+  });
 
   return (
     <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-base-100 shadow-xl relative transition-all duration-300'>
@@ -68,6 +81,6 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
   );
 };
 
-const CoinPriceError: Component<{ error: any }> = ({ error }) => (
+const CoinPriceError: Component<{ error: unknown }> = ({ error }) => (
   <div class='w-full h-full grid place-items-center'>{error.toString()}</div>
 );
