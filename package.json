@@ -1,6 +1,6 @@
 {
   "name": "bear-board",
-  "version": "1.0.2",
+  "version": "1.0.3-alpha.1",
   "description": "",
   "scripts": {
     "dev": "vite",
