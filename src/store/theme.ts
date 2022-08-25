@@ -4,8 +4,8 @@ import { createStore } from 'solid-js/store';
 import { StorageKeys } from '../storage/constants';
 
 export enum Theme {
-  LIGHT = 'bumblebee',
-  DARK = 'halloween',
+  LIGHT = 'light',
+  DARK = 'dark',
 }
 
 interface ThemeStoreState {

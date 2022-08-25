@@ -1,4 +1,4 @@
-import { Component, ParentComponent } from 'solid-js';
+import { Component, ParentComponent, Show } from 'solid-js';
 import { useSelector } from '../../../store';
 
 // === Card wrapper for Dropdown Items ===
@@ -68,8 +68,9 @@ export const DropdownCoinItem: Component<DropdownCoinItemProps> = ({
           </p>
         </div>
 
-        <p class='flex-none text-right text-base-content'>
-          {market_cap_rank && `#${market_cap_rank}`}
+        {/* keep paragraph for proper column alignment */}
+        <p class='flex-none text-right text-accent-content'>
+          <Show when={market_cap_rank}>{`#${market_cap_rank}`}</Show>
         </p>
       </div>
     </DropdownItem>
