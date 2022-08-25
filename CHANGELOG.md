@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Royserg/bear-board/compare/v1.0.2...v1.0.3) (2022-08-25)
+
+
+### Bug Fixes
+
+* **fe:** adjust themes to simple `light` and `dark` with overriden primary color ([d9e80e8](https://github.com/Royserg/bear-board/commit/d9e80e8d262f68e2bcb8306d57227b7b41be0c02))
+
 ## [1.0.3-alpha.1](https://github.com/Royserg/bear-board/compare/v1.0.2...v1.0.3-alpha.1) (2022-08-25)
 
 
