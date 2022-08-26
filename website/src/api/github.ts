@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Platform } from '../utils/interfaces';
 
 const REPO_GH_API_URL = 'https://api.github.com/repos/royserg/bear-board';
 
