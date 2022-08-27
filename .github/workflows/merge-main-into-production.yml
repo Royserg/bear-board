@@ -6,6 +6,7 @@ jobs:
   test-app-builds:
     name: 'Test app builds'
     uses: royserg/bear-board/.github/workflows/test-builds.yml@main
+    secrets: inherit
 
   merge-main-into-production:
     name: 'Merge main into production'
