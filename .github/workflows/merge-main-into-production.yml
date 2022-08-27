@@ -6,7 +6,10 @@ jobs:
   test-app-builds:
     name: 'Test app builds'
     uses: royserg/bear-board/.github/workflows/test-builds.yml@main
-    secrets: inherit
+    secrets: 
+      TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+      TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+
 
   merge-main-into-production:
     name: 'Merge main into production'
