@@ -1,3 +1,10 @@
+# [1.1.0-alpha.2](https://github.com/Royserg/bear-board/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2022-08-27)
+
+
+### Bug Fixes
+
+* **ci:** add missing PRIVATE_KEY secrets to test-build workflow ([8f26401](https://github.com/Royserg/bear-board/commit/8f26401c8d358c0f8e4228ffdd0f0c2f8d511966))
+
 # [1.1.0-alpha.1](https://github.com/Royserg/bear-board/compare/v1.0.3...v1.1.0-alpha.1) (2022-08-27)
 
 
