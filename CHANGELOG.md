@@ -1,3 +1,10 @@
+# [1.1.0-alpha.1](https://github.com/Royserg/bear-board/compare/v1.0.3...v1.1.0-alpha.1) (2022-08-27)
+
+
+### Features
+
+* **ci:** add tauri updater config, include key secrets in build workflow ([ec4456e](https://github.com/Royserg/bear-board/commit/ec4456e01b5d15e8df3bfa600348e40a865d7dff))
+
 ## [1.0.3](https://github.com/Royserg/bear-board/compare/v1.0.2...v1.0.3) (2022-08-25)
 
 
