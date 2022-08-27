@@ -1,3 +1,10 @@
+# [1.1.0-alpha.3](https://github.com/Royserg/bear-board/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2022-08-27)
+
+
+### Bug Fixes
+
+* **ci:** pass secrets to test-builds workflow ([ec1f70d](https://github.com/Royserg/bear-board/commit/ec1f70d5a9a63632fd94f30a8ede08bba318a277))
+
 # [1.1.0-alpha.2](https://github.com/Royserg/bear-board/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2022-08-27)
 
 
