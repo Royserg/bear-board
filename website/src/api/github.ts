@@ -26,10 +26,10 @@ export interface Release {
 }
 
 export enum AssetsPlatformIndex {
-  Other = 0,
-  Linux = 1,
-  Mac = 3,
-  Windows = 4,
+  Other = 3,
+  Linux = 0,
+  Mac = 6,
+  Windows = 7,
 }
 
 export const getLatestRelease = async (): Promise<Release> => {
