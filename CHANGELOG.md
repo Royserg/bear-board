@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Royserg/bear-board/compare/v1.1.0...v1.1.1) (2022-08-28)
+
+
+### Bug Fixes
+
+* **fe:** adjust spinner colors based on the theme ([8ba161c](https://github.com/Royserg/bear-board/commit/8ba161c95bdc9c16c3ac0e2a50a7b5d0b382301e))
+
 ## [1.1.1-alpha.1](https://github.com/Royserg/bear-board/compare/v1.1.0...v1.1.1-alpha.1) (2022-08-28)
 
 
