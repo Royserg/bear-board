@@ -154,7 +154,7 @@ jobs:
             const macSigObj = await github.request(assets[5].browser_download_url);
             const macSignature = new TextDecoder().decode(macSigObj.data);
 
-            const winAssetUrl = assets[8];
+            const winAssetUrl = assets[8].browser_download_url;
             const winSigObj = await github.request(assets[9].browser_download_url);
             const winSignature = new TextDecoder().decode(winSigObj.data);
 
@@ -165,16 +165,16 @@ jobs:
               pub_date: published_at,
               platforms: { 
                 "darwin-x86_64": {
-                  signature: macSignatureUrl,
-                  url: macAsset,
+                  signature: macSignature,
+                  url: macAssetUrl,
                 },
                 "linux-x86_64": {
-                  signature: linuxSignatureUrl,
-                  url: linuxAsset,
+                  signature: linuxSignature,
+                  url: linuxAssetUrl,
                 },
                 "windows-x86_64": {
-                  signature: winSignatureUrl,
-                  url: winAsset,
+                  signature: winSignature,
+                  url: winAssetUrl,
                 }
               }
             }, null, 2);
