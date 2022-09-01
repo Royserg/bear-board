@@ -155,7 +155,7 @@ jobs:
             const macSignature = new TextDecoder().decode(macSigObj.data);
 
             const winAssetUrl = assets[8];
-            const winSigObj = await github.request(assets[9]);
+            const winSigObj = await github.request(assets[9].browser_download_url);
             const winSignature = new TextDecoder().decode(winSigObj.data);
 
 
