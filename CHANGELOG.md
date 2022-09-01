@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Royserg/bear-board/compare/v1.1.1...v1.1.2) (2022-09-01)
+
+
+### Bug Fixes
+
+* **fe:** reload clears prev state, shows spinner and loads data again ([3c1e9c3](https://github.com/Royserg/bear-board/commit/3c1e9c3427e900367d99f68c247143a07bf4986d))
+
 ## [1.1.2-alpha.1](https://github.com/Royserg/bear-board/compare/v1.1.1...v1.1.2-alpha.1) (2022-09-01)
 
 
