@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       latest_release_id: ${{ steps.get_latest_release_id.outputs.result }}
-
     steps:
       - uses: actions/checkout@v3
 
@@ -69,7 +68,6 @@ jobs:
       fail-fast: false
       matrix:
         platform: [macos-latest, ubuntu-latest, windows-latest]
-
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
@@ -127,29 +125,27 @@ jobs:
               prerelease: false
             })
 
-
   modify-updater-gist:
     name: Modify updater.json gist
     needs: [build-app-and-attach-to-release]
     runs-on: ubuntu-latest
     steps:
-
       - name: update download urls and signatures for updater gist
         uses: actions/github-script@v6
-        env: 
+        env:
           release_id: ${{ needs.create-release.outputs.latest_release_id }}
           updater_gist_id: ${{ secrets.UPDATER_GIST_ID }}
         with:
           github-token: ${{ secrets.DEV_OPS_BOT_TOKEN }}
           script: |
-            const { data } = await github.rest.repos.getRelease({
+
+            const { data } = await github.rest.repos.getLatestRelease({
               owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: process.env.release_id
-            });
+              repo: context.repo.repo
+            })
             const { name, body, published_at, assets } = data;
 
-            
+
             const linuxAssetUrl = assets[1].browser_download_url;
             const linuxSigObj = await github.request(assets[2].browser_download_url);
             const linuxSignature = new TextDecoder().decode(linuxSigObj.data);
@@ -161,7 +157,7 @@ jobs:
             const winAssetUrl = assets[8];
             const winSigObj = await github.request(assets[9]);
             const winSignature = new TextDecoder().decode(winSigObj.data);
-  
+
 
             const newGistContent = JSON.stringify({
               version: name,
@@ -182,7 +178,7 @@ jobs:
                 }
               }
             }, null, 2);
-            
+
             await github.rest.gists.update({
               gist_id: process.env.updater_gist_id,
               files: {
@@ -192,12 +188,10 @@ jobs:
               }
             });
 
-
   update-main-branch:
     name: Merge production -> main
     needs: [modify-updater-gist]
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
         with:
