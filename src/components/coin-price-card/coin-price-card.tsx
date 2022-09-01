@@ -26,7 +26,7 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
       console.log(`Error fetching coin data: ${coinId}`, error);
     }
   };
-  const [data, { refetch }] = createResource<CoinData>(fetchCoinData);
+  const [data, { refetch, mutate }] = createResource<CoinData>(fetchCoinData);
 
   let fetchDataTimer: NodeJS.Timer;
 
@@ -39,10 +39,15 @@ export const CoinPriceCard: Component<CoinPriceCardProps> = ({ coinId }) => {
     clearInterval(fetchDataTimer);
   });
 
+  const handleCoinReload = () => {
+    mutate(null);
+    refetch();
+  };
+
   return (
     <div class='my-4 h-64 w-60 max-w-lg items-center justify-center overflow-visible rounded-2xl bg-base-100 shadow-xl relative transition-all duration-300'>
       <Show when={!!data.latest} fallback={<Spinner />}>
-        <CoinActionsMenu coinId={coinId} onReload={() => refetch()} />
+        <CoinActionsMenu coinId={coinId} onReload={handleCoinReload} />
 
         <ErrorBoundary fallback={(error) => <CoinPriceError error={error} />}>
           {/* 24hour change */}
