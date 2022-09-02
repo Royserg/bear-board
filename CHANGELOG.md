@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/Royserg/bear-board/compare/v1.1.2...v1.1.3) (2022-09-02)
+
+
+### Bug Fixes
+
+* add native menu options - enable functions like copy, paste, quit with keyboard support ([d4cebac](https://github.com/Royserg/bear-board/commit/d4cebac62e9fed81605953a340b49a4d3ff6032b))
+
 ## [1.1.3-alpha.1](https://github.com/Royserg/bear-board/compare/v1.1.2...v1.1.3-alpha.1) (2022-09-02)
 
 
