@@ -34,11 +34,12 @@ jobs:
             const winAssetUrl = assets[8].browser_download_url;
             const winSigObj = await github.request(assets[9].browser_download_url);
             const winSignature = new TextDecoder().decode(winSigObj.data);
-
+            
+            const notes = body.replace(/ *\([^)]*\)|#|\) */g, '');
 
             const newGistContent = JSON.stringify({
               version: name,
-              notes: body,
+              notes,
               pub_date: published_at,
               platforms: { 
                 "darwin-x86_64": {
