@@ -1,6 +1,8 @@
 name: Modify updater.json with latest release data
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
   modify-updater-gist:
